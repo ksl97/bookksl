@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Petugas - Perpustakaan Nusantara</title>
+
+<style>
+
+:root {
+    --bg: #f5efe4;
+    --card: #fffaf1;
+    --text: #3d2b1f;
+    --secondary: #6e5b49;
+    --border: #d8c6a9;
+    --primary: #4b2e1f;
+    --gold: #b48a4b;
+    --gold-light: #ead7b5;
+    --success: #47734b;
+    --danger: #9a4545;
+    --warning: #a87532;
+}
+
+body.dark {
+    --bg: #17130f;
+    --card: #241c16;
+    --text: #eadbc3;
+    --secondary: #b9a991;
+    --border: #4a3a2b;
+    --primary: #c29b61;
+    --gold: #c69d5c;
+    --gold-light: #493820;
+    --success: #78a77d;
+    --danger: #d07878;
+    --warning: #d0a15e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    background: #3b2418;
+    color: white;
+    padding: 17px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gold);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 30px;
+}
+
+.logo h1 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.logo span {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #d9bd8b;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.header-button {
+    border: 1px solid #8e704b;
+    background: transparent;
+    color: white;
+    padding: 9px 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 45px auto 80px;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h2 {
+    font-size: 31px;
+    font-weight: normal;
+    margin-bottom: 7px;
+}
+
+.welcome p {
+    color: var(--secondary);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.stat-number {
+    font-size: 29px;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: var(--secondary);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.section {
+    margin-bottom: 35px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-title h3 {
+    font-size: 23px;
+    font-weight: normal;
+}
+
+.filter-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-box select,
+.filter-box input {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.filter-box input {
+    flex: 1;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+}
+
+th {
+    background: var(--gold-light);
+    text-align: left;
+    padding: 13px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+td {
+    padding: 13px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.book-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.book-cover {
+    width: 42px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.book-title {
+    font-weight: bold;
+}
+
+.book-author {
+    color: var(--secondary);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.member-name {
+    font-weight: bold;
+}
+
+.member-id {
+    color: var(--secondary);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.status-pending {
+    background: rgba(168,117,50,.15);
+    color: var(--warning);
+}
+
+.status-approved {
+    background: rgba(71,115,75,.15);
+    color: var(--success);
+}
+
+.status-rejected {
+    background: rgba(154,69,69,.15);
+    color: var(--danger);
+}
+
+.status-returned {
+    background: rgba(100,100,100,.15);
+    color: var(--secondary);
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.action-button {
+    border: none;
+    padding: 7px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+}
+
+.approve {
+    background: var(--success);
+    color: white;
+}
+
+.reject {
+    background: var(--danger);
+    color: white;
+}
+
+.return {
+    background: var(--primary);
+    color: white;
+}
+
+.empty {
+    text-align: center;
+    padding: 45px 20px;
+    color: var(--secondary);
+    font-family: Arial, sans-serif;
+}
+
+footer {
+    background: #281810;
+    color: #d9c9b2;
+    text-align: center;
+    padding: 35px;
+}
+
+footer h3 {
+    color: #f7ead3;
+    font-size: 19px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+footer p {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+@media(max-width:800px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width:500px) {
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-box {
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">📚</div>
+
+        <div>
+            <h1>Perpustakaan Nusantara</h1>
+            <span>KNOWLEDGE • LITERATURE • DISCOVERY</span>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <a href="index.html" class="header-button">
+            Beranda
+        </a>
+
+        <button
+            class="header-button"
+            onclick="toggleTheme()"
+            id="themeButton">
+            🌙
+        </button>
+
+        <button
+            class="header-button"
+            onclick="logout()">
+            Keluar
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="welcome">
+
+        <h2>
+            Dashboard Petugas 👨‍💼
+        </h2>
+
+        <p>
+            Kelola dan proses seluruh permintaan peminjaman anggota.
+        </p>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="stat-number" id="totalLoan">
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Permintaan
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-number" id="pendingLoan">
+                0
+            </div>
+
+            <div class="stat-label">
+                Menunggu Persetujuan
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-number" id="approvedLoan">
+                0
+            </div>
+
+            <div class="stat-label">
+                Sedang Dipinjam
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-number" id="returnedLoan">
+                0
+            </div>
+
+            <div class="stat-label">
+                Selesai
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h3>
+                📋 Daftar Peminjaman
+            </h3>
+
+        </div>
+
+
+        <div class="filter-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Cari nama anggota, ID, atau judul buku..."
+                oninput="renderLoans()"
+            >
+
+
+            <select
+                id="statusFilter"
+                onchange="renderLoans()">
+
+                <option value="Semua">
+                    Semua Status
+                </option>
+
+                <option value="Menunggu Persetujuan">
+                    Menunggu Persetujuan
+                </option>
+
+                <option value="Disetujui">
+                    Disetujui
+                </option>
+
+                <option value="Ditolak">
+                    Ditolak
+                </option>
+
+                <option value="Dikembalikan">
+                    Dikembalikan
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>No</th>
+                        <th>Anggota</th>
+                        <th>Buku</th>
+                        <th>Tgl Pinjam</th>
+                        <th>Tgl Kembali</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="loanTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <h3>
+        Perpustakaan Nusantara
+    </h3>
+
+    <p>
+        Sistem Manajemen Perpustakaan
+    </p>
+
+    <p style="margin-top:12px;">
+        © 2026 Perpustakaan Nusantara · Karunia Suci Lestari
+    </p>
+
+</footer>
+
+
+<script>
+
+const STORAGE_KEY =
+    "libraryLoanRequests";
+
+
+/* ===============================
+   AMBIL DATA
+================================ */
+
+function getLoans() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                STORAGE_KEY
+            )
+        ) || [];
+
+    } catch(error) {
+
+        console.error(error);
+
+        return [];
+
+    }
+
+}
+
+
+/* ===============================
+   SIMPAN DATA
+================================ */
+
+function saveLoans(loans) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(loans)
+    );
+
+}
+
+
+/* ===============================
+   FORMAT TANGGAL
+================================ */
+
+function formatDate(value) {
+
+    if (!value)
+        return "-";
+
+    const date =
+        new Date(
+            value + "T00:00:00"
+        );
+
+    return date.toLocaleDateString(
+        "id-ID",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* ===============================
+   STATUS CLASS
+================================ */
+
+function getStatusClass(status) {
+
+    if (
+        status ===
+        "Menunggu Persetujuan"
+    )
+        return "status-pending";
+
+    if (
+        status ===
+        "Disetujui"
+    )
+        return "status-approved";
+
+    if (
+        status ===
+        "Ditolak"
+    )
+        return "status-rejected";
+
+    if (
+        status ===
+        "Dikembalikan"
+    )
+        return "status-returned";
+
+    return "status-pending";
+
+}
+
+
+/* ===============================
+   STATISTIK
+================================ */
+
+function updateStatistics() {
+
+    const loans =
+        getLoans();
+
+
+    document.getElementById(
+        "totalLoan"
+    ).textContent =
+        loans.length;
+
+
+    document.getElementById(
+        "pendingLoan"
+    ).textContent =
+        loans.filter(
+            loan =>
+                loan.status ===
+                "Menunggu Persetujuan"
+        ).length;
+
+
+    document.getElementById(
+        "approvedLoan"
+    ).textContent =
+        loans.filter(
+            loan =>
+                loan.status ===
+                "Disetujui"
+        ).length;
+
+
+    document.getElementById(
+        "returnedLoan"
+    ).textContent =
+        loans.filter(
+            loan =>
+                loan.status ===
+                "Dikembalikan"
+        ).length;
+
+}
+
+
+/* ===============================
+   TABEL
+================================ */
+
+function renderLoans() {
+
+    const loans =
+        getLoans();
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const filtered =
+        loans.filter(
+            loan => {
+
+                const searchable =
+                    (
+                        loan.memberName ||
+                        ""
+                    ).toLowerCase() +
+                    " " +
+                    (
+                        loan.memberId ||
+                        ""
+                    ).toLowerCase() +
+                    " " +
+                    (
+                        loan.bookTitle ||
+                        ""
+                    ).toLowerCase();
+
+
+                const matchSearch =
+                    !search ||
+                    searchable.includes(
+                        search
+                    );
+
+
+                const matchStatus =
+                    filter === "Semua" ||
+                    loan.status === filter;
+
+
+                return (
+                    matchSearch &&
+                    matchStatus
+                );
+
+            }
+        );
+
+
+    const table =
+        document.getElementById(
+            "loanTable"
+        );
+
+
+    if (filtered.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        <div style="font-size:38px;">
+                            📭
+                        </div>
+
+                        <div style="margin-top:10px;">
+                            Belum ada permintaan peminjaman.
+                        </div>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        updateStatistics();
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        filtered.map(
+            (loan, index) => {
+
+
+                const statusClass =
+                    getStatusClass(
+                        loan.status
+                    );
+
+
+                let actions = "-";
+
+
+                /*
+                   MENUNGGU
+                */
+
+                if (
+                    loan.status ===
+                    "Menunggu Persetujuan"
+                ) {
+
+                    actions = `
+
+                        <div class="actions">
+
+                            <button
+                                class="action-button approve"
+                                onclick="approveLoan(${loan.id})">
+                                ✓ Setujui
+                            </button>
+
+                            <button
+                                class="action-button reject"
+                                onclick="rejectLoan(${loan.id})">
+                                ✕ Tolak
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                /*
+                   DISETUJUI
+                */
+
+                else if (
+                    loan.status ===
+                    "Disetujui"
+                ) {
+
+                    actions = `
+
+                        <button
+                            class="action-button return"
+                            onclick="returnLoan(${loan.id})">
+                            ↩ Kembalikan
+                        </button>
+
+                    `;
+
+                }
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+
+                        <td>
+
+                            <div class="member-name">
+                                ${escapeHTML(
+                                    loan.memberName || "-"
+                                )}
+                            </div>
+
+                            <div class="member-id">
+                                ID:
+                                ${escapeHTML(
+                                    loan.memberId || "-"
+                                )}
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="book-cell">
+
+                                <img
+                                    src="${loan.bookCover || ""}"
+                                    class="book-cover"
+                                    onerror="this.style.display='none'"
+                                >
+
+                                <div>
+
+                                    <div class="book-title">
+                                        ${escapeHTML(
+                                            loan.bookTitle || "-"
+                                        )}
+                                    </div>
+
+                                    <div class="book-author">
+                                        ${escapeHTML(
+                                            loan.bookAuthor || "-"
+                                        )}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            ${formatDate(
+                                loan.borrowDate
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${formatDate(
+                                loan.returnDate
+                            )}
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="status ${statusClass}">
+
+                                ${escapeHTML(
+                                    loan.status || "-"
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            ${actions}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        ).join("");
+
+
+    updateStatistics();
+
+}
+
+
+/* ===============================
+   SETUJUI
+================================ */
+
+function approveLoan(id) {
+
+    const loans =
+        getLoans();
+
+
+    const index =
+        loans.findIndex(
+            loan =>
+                Number(loan.id) ===
+                Number(id)
+        );
+
+
+    if (index === -1) {
+
+        alert(
+            "Data peminjaman tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        loans[index].status !==
+        "Menunggu Persetujuan"
+    ) {
+
+        alert(
+            "Permintaan ini sudah diproses."
+        );
+
+        return;
+
+    }
+
+
+    const confirmApprove =
+        confirm(
+            "Setujui peminjaman buku ini?"
+        );
+
+
+    if (!confirmApprove)
+        return;
+
+
+    loans[index].status =
+        "Disetujui";
+
+
+    loans[index].approvedAt =
+        new Date().toISOString();
+
+
+    loans[index].processedBy =
+        localStorage.getItem(
+            "petugasName"
+        ) ||
+        "Petugas";
+
+
+    saveLoans(loans);
+
+    renderLoans();
+
+}
+
+
+/* ===============================
+   TOLAK
+================================ */
+
+function rejectLoan(id) {
+
+    const loans =
+        getLoans();
+
+
+    const index =
+        loans.findIndex(
+            loan =>
+                Number(loan.id) ===
+                Number(id)
+        );
+
+
+    if (index === -1) {
+
+        alert(
+            "Data peminjaman tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    const reason =
+        prompt(
+            "Masukkan alasan penolakan:"
+        );
+
+
+    if (
+        reason === null
+    )
+        return;
+
+
+    loans[index].status =
+        "Ditolak";
+
+
+    loans[index].rejectionReason =
+        reason.trim();
+
+
+    loans[index].rejectedAt =
+        new Date().toISOString();
+
+
+    loans[index].processedBy =
+        localStorage.getItem(
+            "petugasName"
+        ) ||
+        "Petugas";
+
+
+    saveLoans(loans);
+
+    renderLoans();
+
+}
+
+
+/* ===============================
+   PENGEMBALIAN
+================================ */
+
+function returnLoan(id) {
+
+    const loans =
+        getLoans();
+
+
+    const index =
+        loans.findIndex(
+            loan =>
+                Number(loan.id) ===
+                Number(id)
+        );
+
+
+    if (index === -1) {
+
+        alert(
+            "Data peminjaman tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    const confirmReturn =
+        confirm(
+            "Konfirmasi bahwa buku sudah dikembalikan?"
+        );
+
+
+    if (!confirmReturn)
+        return;
+
+
+    loans[index].status =
+        "Dikembalikan";
+
+
+    loans[index].returnedAt =
+        new Date().toISOString();
+
+
+    loans[index].processedBy =
+        localStorage.getItem(
+            "petugasName"
+        ) ||
+        "Petugas";
+
+
+    saveLoans(loans);
+
+    renderLoans();
+
+}
+
+
+/* ===============================
+   ESCAPE HTML
+================================ */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ===============================
+   DARK MODE
+================================ */
+
+function toggleTheme() {
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "libraryTheme",
+        dark
+            ? "dark"
+            : "light"
+    );
+
+
+    document.getElementById(
+        "themeButton"
+    ).textContent =
+        dark
+            ? "☀️"
+            : "🌙";
+
+}
+
+
+if (
+    localStorage.getItem(
+        "libraryTheme"
+    ) === "dark"
+) {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+    document.getElementById(
+        "themeButton"
+    ).textContent =
+        "☀️";
+
+}
+
+
+/* ===============================
+   LOGOUT
+================================ */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loginPetugas"
+    );
+
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ===============================
+   INITIAL
+================================ */
+
+renderLoans();
+
+
+/*
+   Periksa perubahan data setiap detik.
+   Jadi ketika data berubah pada halaman
+   yang sama, tabel ikut diperbarui.
+*/
+
+setInterval(
+    renderLoans,
+    1000
+);
+
+</script>
+
+</body>
+</html>
