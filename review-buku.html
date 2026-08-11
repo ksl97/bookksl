@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Rating & Review Buku</title>
+
+<style>
+
+:root {
+
+    --bg: #f5efe4;
+    --card: #fffaf1;
+    --text: #3d2b1f;
+    --secondary: #6e5b49;
+    --border: #d8c6a9;
+    --primary: #4b2e1f;
+    --gold: #b48a4b;
+    --gold-light: #ead7b5;
+
+}
+
+body.dark {
+
+    --bg: #17130f;
+    --card: #241c16;
+    --text: #eadbc3;
+    --secondary: #b9a991;
+    --border: #4a3a2b;
+    --primary: #c29b61;
+    --gold: #c69d5c;
+    --gold-light: #493820;
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+
+body {
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+    transition: .3s;
+
+}
+
+
+header {
+
+    background: #3b2418;
+
+    color: white;
+
+    padding: 18px 7%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 4px solid var(--gold);
+
+}
+
+
+.logo {
+
+    font-size: 22px;
+
+}
+
+
+.header-right {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+}
+
+
+.header-button {
+
+    background: transparent;
+
+    color: white;
+
+    border: 1px solid #92734b;
+
+    padding: 9px 13px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+
+.container {
+
+    width: 90%;
+
+    max-width: 900px;
+
+    margin: 50px auto;
+
+}
+
+
+.book-header {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    padding: 30px;
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.book-cover {
+
+    width: 150px;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 5px;
+
+}
+
+
+.book-info {
+
+    flex: 1;
+
+}
+
+
+.book-info h1 {
+
+    font-size: 34px;
+
+    font-weight: normal;
+
+    margin-bottom: 8px;
+
+}
+
+
+.author {
+
+    color: var(--secondary);
+
+    margin-bottom: 20px;
+
+}
+
+
+.rating-summary {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.average {
+
+    font-size: 38px;
+
+}
+
+
+.stars {
+
+    color: var(--gold);
+
+    font-size: 25px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.review-form {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    padding: 30px;
+
+    border-radius: 8px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.review-form h2 {
+
+    font-weight: normal;
+
+    margin-bottom: 20px;
+
+}
+
+
+.star-rating {
+
+    display: flex;
+
+    gap: 5px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.star {
+
+    font-size: 35px;
+
+    color: #b7a996;
+
+    cursor: pointer;
+
+    transition: .15s;
+
+}
+
+
+.star:hover,
+.star.active {
+
+    color: var(--gold);
+
+}
+
+
+textarea {
+
+    width: 100%;
+
+    min-height: 130px;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    resize: vertical;
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+.submit-button {
+
+    margin-top: 15px;
+
+    padding: 12px 20px;
+
+    background: var(--primary);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+
+.submit-button:hover {
+
+    opacity: .85;
+
+}
+
+
+.review-section {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    padding: 30px;
+
+    border-radius: 8px;
+
+}
+
+
+.review-section h2 {
+
+    font-weight: normal;
+
+    margin-bottom: 20px;
+
+}
+
+
+.review-card {
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid var(--border);
+
+}
+
+
+.review-card:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.reviewer {
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+
+}
+
+
+.review-stars {
+
+    color: var(--gold);
+
+    margin-bottom: 8px;
+
+}
+
+
+.review-date {
+
+    color: var(--secondary);
+
+    font-size: 11px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.review-text {
+
+    color: var(--secondary);
+
+    line-height: 1.7;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+}
+
+
+.empty {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: var(--secondary);
+
+}
+
+
+@media(max-width:600px) {
+
+    .book-header {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        text-align: center;
+
+    }
+
+    .rating-summary {
+
+        justify-content: center;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        📚 Perpustakaan Nusantara
+    </div>
+
+    <div class="header-right">
+
+        <button
+            class="header-button"
+            onclick="history.back()"
+        >
+            ← Kembali
+        </button>
+
+        <button
+            class="header-button"
+            id="themeButton"
+        >
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- INFORMASI BUKU -->
+
+    <section class="book-header">
+
+        <img
+            id="bookCover"
+            class="book-cover"
+            src=""
+            alt="Cover Buku"
+        >
+
+        <div class="book-info">
+
+            <h1 id="bookTitle">
+                Buku
+            </h1>
+
+            <p
+                class="author"
+                id="bookAuthor"
+            >
+                Penulis
+            </p>
+
+
+            <div class="rating-summary">
+
+                <div
+                    class="average"
+                    id="averageRating"
+                >
+                    0.0
+                </div>
+
+                <div>
+
+                    <div
+                        class="stars"
+                        id="averageStars"
+                    >
+                        ☆☆☆☆☆
+                    </div>
+
+                    <div
+                        id="reviewCount"
+                        style="color:var(--secondary);font-size:12px;"
+                    >
+                        0 review
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FORM REVIEW -->
+
+    <section class="review-form">
+
+        <h2>
+            ✍️ Berikan Rating & Review
+        </h2>
+
+
+        <p
+            style="color:var(--secondary);font-size:13px;margin-bottom:12px;"
+        >
+            Bagaimana pendapat Anda tentang buku ini?
+        </p>
+
+
+        <div
+            class="star-rating"
+            id="starRating"
+        >
+
+            <span
+                class="star"
+                data-rating="1"
+            >
+                ★
+            </span>
+
+            <span
+                class="star"
+                data-rating="2"
+            >
+                ★
+            </span>
+
+            <span
+                class="star"
+                data-rating="3"
+            >
+                ★
+            </span>
+
+            <span
+                class="star"
+                data-rating="4"
+            >
+                ★
+            </span>
+
+            <span
+                class="star"
+                data-rating="5"
+            >
+                ★
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="reviewText"
+            placeholder="Tuliskan pendapat Anda mengenai buku ini..."
+        ></textarea>
+
+
+        <button
+            class="submit-button"
+            onclick="submitReview()"
+        >
+            Kirim Review
+        </button>
+
+    </section>
+
+
+
+    <!-- DAFTAR REVIEW -->
+
+    <section class="review-section">
+
+        <h2>
+            💬 Review Pembaca
+        </h2>
+
+        <div id="reviewList">
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   DATA BUKU
+===================================================== */
+
+const books = {
+
+    "1": {
+        title: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        cover: "https://covers.openlibrary.org/b/isbn/9786024246945-L.jpg"
+    },
+
+    "2": {
+        title: "Filosofi Teras",
+        author: "Henry Manampiring",
+        cover: "https://covers.openlibrary.org/b/isbn/9786024125189-L.jpg"
+    },
+
+    "3": {
+        title: "Sapiens",
+        author: "Yuval Noah Harari",
+        cover: "https://covers.openlibrary.org/b/isbn/9780062316097-L.jpg"
+    },
+
+    "4": {
+        title: "Atomic Habits",
+        author: "James Clear",
+        cover: "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg"
+    },
+
+    "5": {
+        title: "The Psychology of Money",
+        author: "Morgan Housel",
+        cover: "https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg"
+    },
+
+    "6": {
+        title: "Clean Code",
+        author: "Robert C. Martin",
+        cover: "https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg"
+    },
+
+    "7": {
+        title: "The Midnight Library",
+        author: "Matt Haig",
+        cover: "https://covers.openlibrary.org/b/isbn/9780525559474-L.jpg"
+    },
+
+    "8": {
+        title: "Start With Why",
+        author: "Simon Sinek",
+        cover: "https://covers.openlibrary.org/b/isbn/9781591846444-L.jpg"
+    },
+
+    "9": {
+        title: "Amygdala",
+        author: "Karunia Suci Lestari",
+        cover: "https://img.wattpad.com/cover/409780215-256-k837599.jpg"
+    },
+
+    "10": {
+        title: "Self Healing",
+        author: "Karunia Suci Lestari",
+        cover: "https://gwp.id/images-data/img-stories/127437/selfhealing.jpg"
+    },
+
+    "11": {
+        title: "Giska",
+        author: "Karunia Suci Lestari",
+        cover: "https://img.wattpad.com/cover/283401457-256-k291659.jpg"
+    }
+
+};
+
+
+
+/* =====================================================
+   AMBIL ID BUKU
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const bookId =
+    params.get("id") || "1";
+
+
+const book =
+    books[bookId] || books["1"];
+
+
+
+/* =====================================================
+   TAMPILKAN INFORMASI BUKU
+===================================================== */
+
+document.getElementById(
+    "bookTitle"
+).textContent =
+    book.title;
+
+
+document.getElementById(
+    "bookAuthor"
+).textContent =
+    book.author;
+
+
+document.getElementById(
+    "bookCover"
+).src =
+    book.cover;
+
+
+
+/* =====================================================
+   DATA REVIEW
+===================================================== */
+
+const storageKey =
+    "reviews_book_" + bookId;
+
+
+let reviews =
+    JSON.parse(
+        localStorage.getItem(
+            storageKey
+        )
+    ) || [];
+
+
+
+/* =====================================================
+   RATING TERPILIH
+===================================================== */
+
+let selectedRating =
+    0;
+
+
+const stars =
+    document.querySelectorAll(
+        ".star"
+    );
+
+
+stars.forEach(
+    function(star) {
+
+        star.addEventListener(
+            "click",
+            function() {
+
+                selectedRating =
+                    Number(
+                        this.dataset.rating
+                    );
+
+                updateStars();
+
+            }
+        );
+
+    }
+);
+
+
+
+function updateStars() {
+
+    stars.forEach(
+        function(star) {
+
+            const rating =
+                Number(
+                    star.dataset.rating
+                );
+
+            if (
+                rating <= selectedRating
+            ) {
+
+                star.classList.add(
+                    "active"
+                );
+
+            }
+
+            else {
+
+                star.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   KIRIM REVIEW
+===================================================== */
+
+function submitReview() {
+
+
+    if (
+        selectedRating === 0
+    ) {
+
+        alert(
+            "Silakan pilih rating terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    const text =
+        document.getElementById(
+            "reviewText"
+        ).value.trim();
+
+
+    if (
+        text === ""
+    ) {
+
+        alert(
+            "Silakan tuliskan review terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Untuk sementara nama anggota
+       diambil dari localStorage.
+    */
+
+    const username =
+        localStorage.getItem(
+            "username"
+        ) || "Anggota Perpustakaan";
+
+
+    const newReview = {
+
+        name:
+            username,
+
+        rating:
+            selectedRating,
+
+        text:
+            text,
+
+        date:
+            new Date().toLocaleDateString(
+                "id-ID",
+                {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            )
+
+    };
+
+
+    reviews.push(
+        newReview
+    );
+
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(
+            reviews
+        )
+    );
+
+
+    document.getElementById(
+        "reviewText"
+    ).value = "";
+
+
+    selectedRating =
+        0;
+
+
+    updateStars();
+
+
+    displayReviews();
+
+
+    alert(
+        "Review berhasil disimpan!"
+    );
+
+}
+
+
+
+/* =====================================================
+   TAMPILKAN REVIEW
+===================================================== */
+
+function displayReviews() {
+
+
+    const reviewList =
+        document.getElementById(
+            "reviewList"
+        );
+
+
+    reviewList.innerHTML =
+        "";
+
+
+    if (
+        reviews.length === 0
+    ) {
+
+        reviewList.innerHTML = `
+
+            <div class="empty">
+
+                Belum ada review untuk buku ini.
+
+                <br>
+
+                Jadilah pembaca pertama
+                yang memberikan review.
+
+            </div>
+
+        `;
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    reviews
+        .slice()
+        .reverse()
+        .forEach(
+            function(review) {
+
+
+                const stars =
+                    "★".repeat(
+                        review.rating
+                    ) +
+                    "☆".repeat(
+                        5 - review.rating
+                    );
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "review-card";
+
+
+                card.innerHTML = `
+
+                    <div class="reviewer">
+                        ${escapeHTML(review.name)}
+                    </div>
+
+                    <div class="review-stars">
+                        ${stars}
+                    </div>
+
+                    <div class="review-date">
+                        ${review.date}
+                    </div>
+
+                    <div class="review-text">
+                        ${escapeHTML(review.text)}
+                    </div>
+
+                `;
+
+
+                reviewList.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+    updateSummary();
+
+}
+
+
+
+/* =====================================================
+   HITUNG RATING RATA-RATA
+===================================================== */
+
+function updateSummary() {
+
+
+    const count =
+        reviews.length;
+
+
+    if (
+        count === 0
+    ) {
+
+        document.getElementById(
+            "averageRating"
+        ).textContent =
+            "0.0";
+
+        document.getElementById(
+            "averageStars"
+        ).textContent =
+            "☆☆☆☆☆";
+
+        document.getElementById(
+            "reviewCount"
+        ).textContent =
+            "0 review";
+
+        return;
+
+    }
+
+
+    const total =
+        reviews.reduce(
+            function(sum, review) {
+
+                return sum +
+                    review.rating;
+
+            },
+            0
+        );
+
+
+    const average =
+        total / count;
+
+
+    document.getElementById(
+        "averageRating"
+    ).textContent =
+        average.toFixed(1);
+
+
+    const rounded =
+        Math.round(
+            average
+        );
+
+
+    document.getElementById(
+        "averageStars"
+    ).textContent =
+        "★".repeat(
+            rounded
+        ) +
+        "☆".repeat(
+            5 - rounded
+        );
+
+
+    document.getElementById(
+        "reviewCount"
+    ).textContent =
+        count +
+        (
+            count === 1
+                ? " review"
+                : " reviews"
+        );
+
+}
+
+
+
+/* =====================================================
+   KEAMANAN HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+const savedTheme =
+    localStorage.getItem(
+        "libraryTheme"
+    );
+
+
+if (
+    savedTheme === "dark"
+) {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+    themeButton.textContent =
+        "☀️";
+
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        const dark =
+            document.body.classList.contains(
+                "dark"
+            );
+
+
+        localStorage.setItem(
+            "libraryTheme",
+            dark
+                ? "dark"
+                : "light"
+        );
+
+
+        themeButton.textContent =
+            dark
+                ? "☀️"
+                : "🌙";
+
+    }
+);
+
+
+
+/* =====================================================
+   LOAD REVIEW
+===================================================== */
+
+displayReviews();
+
+
+</script>
+
+
+</body>
+
+</html>
