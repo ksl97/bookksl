@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Peminjaman Buku - Perpustakaan Nusantara</title>
+
+
+<style>
+
+/* =====================================================
+   VARIABLE
+===================================================== */
+
+:root {
+
+    --bg: #f5efe4;
+    --card: #fffaf1;
+    --text: #3d2b1f;
+    --secondary: #6e5b49;
+    --border: #d8c6a9;
+
+    --primary: #4b2e1f;
+    --primary-hover: #321d13;
+
+    --gold: #b48a4b;
+    --gold-light: #ead7b5;
+
+    --header: #3b2418;
+    --footer: #281810;
+
+    --success: #47734b;
+    --warning: #a87532;
+    --danger: #9a4545;
+
+    --shadow: rgba(60,40,20,.12);
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark {
+
+    --bg: #17130f;
+    --card: #241c16;
+
+    --text: #eadbc3;
+    --secondary: #b9a991;
+
+    --border: #4a3a2b;
+
+    --primary: #c29b61;
+    --primary-hover: #d4b17b;
+
+    --gold: #c69d5c;
+    --gold-light: #493820;
+
+    --header: #100d0a;
+    --footer: #0d0a08;
+
+    --success: #78a77d;
+    --warning: #d0a15e;
+    --danger: #d07878;
+
+    --shadow: rgba(0,0,0,.35);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    min-height:
+        100vh;
+
+    transition:
+        background .3s,
+        color .3s;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+
+    background:
+        var(--header);
+
+    color:
+        #f8ecd8;
+
+    padding:
+        17px 7%;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    border-bottom:
+        4px solid var(--gold);
+
+}
+
+
+.logo {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+}
+
+
+.logo-icon {
+
+    font-size:
+        30px;
+
+}
+
+
+.logo h1 {
+
+    font-size:
+        20px;
+
+    font-weight:
+        normal;
+
+}
+
+
+.logo span {
+
+    display:
+        block;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        1.5px;
+
+    color:
+        #d9bd8b;
+
+}
+
+
+.header-actions {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    align-items:
+        center;
+
+}
+
+
+.header-button {
+
+    border:
+        1px solid #8e704b;
+
+    background:
+        transparent;
+
+    color:
+        white;
+
+    padding:
+        9px 13px;
+
+    border-radius:
+        4px;
+
+    cursor:
+        pointer;
+
+    text-decoration:
+        none;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        11px;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+
+    width:
+        90%;
+
+    max-width:
+        950px;
+
+    margin:
+        45px auto 80px;
+
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+
+    margin-bottom:
+        30px;
+
+}
+
+
+.page-title h2 {
+
+    font-size:
+        32px;
+
+    font-weight:
+        normal;
+
+    margin-bottom:
+        7px;
+
+}
+
+
+.page-title p {
+
+    color:
+        var(--secondary);
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =====================================================
+   MAIN GRID
+===================================================== */
+
+.borrow-layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        280px 1fr;
+
+    gap:
+        35px;
+
+}
+
+
+/* =====================================================
+   BOOK CARD
+===================================================== */
+
+.book-card {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        7px;
+
+    padding:
+        25px;
+
+    height:
+        fit-content;
+
+    box-shadow:
+        0 8px 25px var(--shadow);
+
+}
+
+
+.book-cover {
+
+    width:
+        100%;
+
+    height:
+        350px;
+
+    object-fit:
+        cover;
+
+    border-radius:
+        4px;
+
+    box-shadow:
+        0 8px 20px var(--shadow);
+
+}
+
+
+.book-card h3 {
+
+    margin-top:
+        18px;
+
+    font-size:
+        21px;
+
+    font-weight:
+        normal;
+
+}
+
+
+.book-author {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--secondary);
+
+    font-size:
+        13px;
+
+}
+
+
+.book-type {
+
+    display:
+        inline-block;
+
+    margin-top:
+        13px;
+
+    padding:
+        5px 9px;
+
+    background:
+        var(--gold-light);
+
+    border-radius:
+        3px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        9px;
+
+}
+
+
+/* =====================================================
+   FORM CARD
+===================================================== */
+
+.form-card {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        7px;
+
+    padding:
+        32px;
+
+    box-shadow:
+        0 8px 25px var(--shadow);
+
+}
+
+
+.form-card h3 {
+
+    font-size:
+        23px;
+
+    font-weight:
+        normal;
+
+    margin-bottom:
+        25px;
+
+}
+
+
+.form-group {
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.form-group label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        bold;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width:
+        100%;
+
+    padding:
+        12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        4px;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        13px;
+
+    outline:
+        none;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color:
+        var(--gold);
+
+}
+
+
+.form-group textarea {
+
+    min-height:
+        90px;
+
+    resize:
+        vertical;
+
+}
+
+
+.help-text {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    color:
+        var(--secondary);
+
+    font-size:
+        10px;
+
+}
+
+
+/* =====================================================
+   USER INFO
+===================================================== */
+
+.member-info {
+
+    background:
+        var(--gold-light);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        5px;
+
+    padding:
+        15px;
+
+    margin-bottom:
+        25px;
+
+}
+
+
+.member-info-title {
+
+    font-size:
+        11px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-weight:
+        bold;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+.member-info p {
+
+    font-size:
+        12px;
+
+    color:
+        var(--secondary);
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary {
+
+    margin-top:
+        25px;
+
+    border-top:
+        1px solid var(--border);
+
+    padding-top:
+        20px;
+
+}
+
+
+.summary-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    padding:
+        8px 0;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
+}
+
+
+.summary-row span:first-child {
+
+    color:
+        var(--secondary);
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.submit-button {
+
+    width:
+        100%;
+
+    margin-top:
+        25px;
+
+    padding:
+        14px;
+
+    border:
+        none;
+
+    border-radius:
+        4px;
+
+    background:
+        var(--primary);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
+    font-weight:
+        bold;
+
+}
+
+
+.submit-button:hover {
+
+    background:
+        var(--primary-hover);
+
+}
+
+
+.submit-button:disabled {
+
+    opacity:
+        .6;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-box {
+
+    display:
+        none;
+
+    margin-top:
+        25px;
+
+    padding:
+        20px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        5px;
+
+}
+
+
+.status-box.show {
+
+    display:
+        block;
+
+}
+
+
+.status-icon {
+
+    font-size:
+        32px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.status-box h4 {
+
+    font-size:
+        20px;
+
+    font-weight:
+        normal;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+.status-box p {
+
+    color:
+        var(--secondary);
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+
+}
+
+
+.status-pending {
+
+    background:
+        rgba(180,138,75,.12);
+
+}
+
+
+.status-success {
+
+    background:
+        rgba(71,115,75,.12);
+
+}
+
+
+.status-danger {
+
+    background:
+        rgba(154,69,69,.12);
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+    background:
+        var(--footer);
+
+    color:
+        #d9c9b2;
+
+    text-align:
+        center;
+
+    padding:
+        35px 7%;
+
+}
+
+
+footer h3 {
+
+    color:
+        #f7ead3;
+
+    font-size:
+        19px;
+
+    font-weight:
+        normal;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+footer p {
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        11px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:750px) {
+
+    .borrow-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .book-card {
+
+        max-width:
+            350px;
+
+        margin:
+            auto;
+
+    }
+
+
+    .book-cover {
+
+        height:
+            400px;
+
+    }
+
+}
+
+
+@media(max-width:500px) {
+
+    .container {
+
+        width:
+            92%;
+
+    }
+
+
+    .form-card {
+
+        padding:
+            22px;
+
+    }
+
+
+    .page-title h2 {
+
+        font-size:
+            27px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            📚
+        </div>
+
+        <div>
+
+            <h1>
+                Perpustakaan Nusantara
+            </h1>
+
+            <span>
+                KNOWLEDGE • LITERATURE • DISCOVERY
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="index.html"
+            class="header-button"
+        >
+            Beranda
+        </a>
+
+
+        <button
+            class="header-button"
+            id="themeButton"
+        >
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h2>
+            Peminjaman Buku
+        </h2>
+
+        <p>
+            Ajukan permintaan peminjaman buku kepada petugas perpustakaan.
+        </p>
+
+    </div>
+
+
+
+    <div class="borrow-layout">
+
+
+        <!-- =================================================
+             BOOK INFORMATION
+        ================================================== -->
+
+        <section class="book-card">
+
+
+            <img
+                id="bookCover"
+                class="book-cover"
+                src=""
+                alt="Cover Buku"
+            >
+
+
+            <h3
+                id="bookTitle"
+            >
+                Judul Buku
+            </h3>
+
+
+            <p
+                id="bookAuthor"
+                class="book-author"
+            >
+                Penulis
+            </p>
+
+
+            <span
+                id="bookType"
+                class="book-type"
+            >
+                Buku Fisik
+            </span>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FORM PEMINJAMAN
+        ================================================== -->
+
+        <section class="form-card">
+
+
+            <h3>
+                Form Pengajuan Peminjaman
+            </h3>
+
+
+
+            <!-- INFORMASI ANGGOTA -->
+
+            <div class="member-info">
+
+                <div class="member-info-title">
+                    👤 Informasi Anggota
+                </div>
+
+                <p id="memberStatus">
+                    Silakan lengkapi data anggota.
+                </p>
+
+            </div>
+
+
+
+            <!-- NAMA -->
+
+            <div class="form-group">
+
+                <label for="memberName">
+                    Nama Anggota
+                </label>
+
+                <input
+                    type="text"
+                    id="memberName"
+                    placeholder="Masukkan nama lengkap"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- ID ANGGOTA -->
+
+            <div class="form-group">
+
+                <label for="memberId">
+                    ID / Nomor Anggota
+                </label>
+
+                <input
+                    type="text"
+                    id="memberId"
+                    placeholder="Contoh: AGT001"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- TANGGAL PINJAM -->
+
+            <div class="form-group">
+
+                <label for="borrowDate">
+                    Tanggal Peminjaman
+                </label>
+
+                <input
+                    type="date"
+                    id="borrowDate"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- DURASI -->
+
+            <div class="form-group">
+
+                <label for="duration">
+                    Lama Peminjaman
+                </label>
+
+                <select
+                    id="duration"
+                    required
+                >
+
+                    <option value="">
+                        Pilih lama peminjaman
+                    </option>
+
+                    <option value="3">
+                        3 hari
+                    </option>
+
+                    <option value="7">
+                        7 hari
+                    </option>
+
+                    <option value="14">
+                        14 hari
+                    </option>
+
+                    <option value="21">
+                        21 hari
+                    </option>
+
+                </select>
+
+                <span class="help-text">
+                    Tanggal pengembalian akan dihitung otomatis.
+                </span>
+
+            </div>
+
+
+
+            <!-- TANGGAL KEMBALI -->
+
+            <div class="form-group">
+
+                <label for="returnDate">
+                    Tanggal Pengembalian
+                </label>
+
+                <input
+                    type="date"
+                    id="returnDate"
+                    readonly
+                >
+
+            </div>
+
+
+
+            <!-- CATATAN -->
+
+            <div class="form-group">
+
+                <label for="notes">
+                    Catatan
+                </label>
+
+                <textarea
+                    id="notes"
+                    placeholder="Catatan tambahan jika diperlukan..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Buku
+                    </span>
+
+                    <strong id="summaryBook">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Anggota
+                    </span>
+
+                    <strong id="summaryMember">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Tanggal Pinjam
+                    </span>
+
+                    <strong id="summaryBorrow">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Tanggal Kembali
+                    </span>
+
+                    <strong id="summaryReturn">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="button"
+                class="submit-button"
+                id="submitButton"
+                onclick="submitLoan()"
+            >
+                📚 Ajukan Peminjaman
+            </button>
+
+
+
+            <!-- STATUS -->
+
+            <div
+                class="status-box status-pending"
+                id="statusBox"
+            >
+
+                <div class="status-icon">
+                    ⏳
+                </div>
+
+                <h4>
+                    Menunggu Persetujuan
+                </h4>
+
+                <p>
+                    Permintaan peminjaman Anda telah berhasil dikirim.
+                    Silakan menunggu persetujuan dari petugas perpustakaan.
+                </p>
+
+                <p style="margin-top:10px;">
+                    Nomor permintaan:
+                    <strong id="requestNumber">
+                        -
+                    </strong>
+                </p>
+
+            </div>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <h3>
+        Perpustakaan Nusantara
+    </h3>
+
+    <p>
+        Membuka jendela pengetahuan
+        melalui buku dan cerita.
+    </p>
+
+    <p style="margin-top:15px;">
+        © 2026 Perpustakaan Nusantara
+        · Karunia Suci Lestari
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =====================================================
+   DATA BUKU
+===================================================== */
+
+const books = {
+
+
+    "1": {
+
+        title:
+            "Laut Bercerita",
+
+        author:
+            "Leila S. Chudori",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9786024246945-L.jpg"
+
+    },
+
+
+    "2": {
+
+        title:
+            "Filosofi Teras",
+
+        author:
+            "Henry Manampiring",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9786024125189-L.jpg"
+
+    },
+
+
+    "3": {
+
+        title:
+            "Sapiens",
+
+        author:
+            "Yuval Noah Harari",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9780062316097-L.jpg"
+
+    },
+
+
+    "4": {
+
+        title:
+            "Atomic Habits",
+
+        author:
+            "James Clear",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg"
+
+    },
+
+
+    "5": {
+
+        title:
+            "The Psychology of Money",
+
+        author:
+            "Morgan Housel",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg"
+
+    },
+
+
+    "6": {
+
+        title:
+            "Clean Code",
+
+        author:
+            "Robert C. Martin",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg"
+
+    },
+
+
+    "7": {
+
+        title:
+            "The Midnight Library",
+
+        author:
+            "Matt Haig",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9780525559474-L.jpg"
+
+    },
+
+
+    "8": {
+
+        title:
+            "Start With Why",
+
+        author:
+            "Simon Sinek",
+
+        type:
+            "Buku Fisik",
+
+        cover:
+            "https://covers.openlibrary.org/b/isbn/9781591846444-L.jpg"
+
+    },
+
+
+    /* ================================================
+       KARYA KARUNIA SUCI LESTARI
+    ================================================= */
+
+    "9": {
+
+        title:
+            "Amygdala",
+
+        author:
+            "Karunia Suci Lestari",
+
+        type:
+            "Wattpad",
+
+        cover:
+            "https://img.wattpad.com/cover/409780215-256-k837599.jpg"
+
+    },
+
+
+    "10": {
+
+        title:
+            "Self Healing",
+
+        author:
+            "Karunia Suci Lestari",
+
+        type:
+            "GWP",
+
+        cover:
+            "https://gwp.id/images-data/img-stories/127437/selfhealing.jpg"
+
+    },
+
+
+    "11": {
+
+        title:
+            "Giska",
+
+        author:
+            "Karunia Suci Lestari",
+
+        type:
+            "Wattpad",
+
+        cover:
+            "https://img.wattpad.com/cover/283401457-256-k291659.jpg"
+
+    }
+
+};
+
+
+
+/* =====================================================
+   AMBIL ID BUKU
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const bookId =
+    params.get("id") || "1";
+
+
+const book =
+    books[bookId];
+
+
+
+/* =====================================================
+   VALIDASI BUKU
+===================================================== */
+
+if (!book) {
+
+    document.getElementById(
+        "bookTitle"
+    ).textContent =
+        "Buku tidak ditemukan";
+
+}
+
+
+
+/* =====================================================
+   TAMPILKAN DATA BUKU
+===================================================== */
+
+if (book) {
+
+    document.title =
+        "Peminjaman " +
+        book.title +
+        " - Perpustakaan Nusantara";
+
+
+    document.getElementById(
+        "bookCover"
+    ).src =
+        book.cover;
+
+
+    document.getElementById(
+        "bookTitle"
+    ).textContent =
+        book.title;
+
+
+    document.getElementById(
+        "bookAuthor"
+    ).textContent =
+        book.author;
+
+
+    document.getElementById(
+        "bookType"
+    ).textContent =
+        book.type;
+
+
+    document.getElementById(
+        "summaryBook"
+    ).textContent =
+        book.title;
+
+}
+
+
+
+/* =====================================================
+   BUKU DIGITAL TIDAK BISA DIPINJAM
+===================================================== */
+
+if (
+    book &&
+    (
+        book.type === "Wattpad" ||
+        book.type === "GWP"
+    )
+) {
+
+    document.getElementById(
+        "submitButton"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "submitButton"
+    ).textContent =
+        "📖 Buku Digital Tidak Dipinjamkan";
+
+
+    document.getElementById(
+        "memberStatus"
+    ).textContent =
+        "Buku ini merupakan karya digital dan tersedia untuk dibaca secara online.";
+
+}
+
+
+
+/* =====================================================
+   CEK DATA LOGIN
+===================================================== */
+
+/*
+   Kita mencoba beberapa nama localStorage
+   supaya bisa menyesuaikan dengan sistem login
+   yang sudah Anda buat sebelumnya.
+*/
+
+const savedUsername =
+    localStorage.getItem("username") ||
+    localStorage.getItem("namaAnggota") ||
+    localStorage.getItem("nama") ||
+    localStorage.getItem("memberName");
+
+
+const savedMemberId =
+    localStorage.getItem("memberId") ||
+    localStorage.getItem("idAnggota") ||
+    localStorage.getItem("anggotaId");
+
+
+
+if (savedUsername) {
+
+    document.getElementById(
+        "memberName"
+    ).value =
+        savedUsername;
+
+}
+
+
+if (savedMemberId) {
+
+    document.getElementById(
+        "memberId"
+    ).value =
+        savedMemberId;
+
+}
+
+
+
+if (savedUsername || savedMemberId) {
+
+    document.getElementById(
+        "memberStatus"
+    ).textContent =
+        "Data anggota ditemukan dari sesi login.";
+
+}
+
+
+
+/* =====================================================
+   TANGGAL HARI INI
+===================================================== */
+
+const borrowDate =
+    document.getElementById(
+        "borrowDate"
+    );
+
+
+const today =
+    new Date();
+
+
+const year =
+    today.getFullYear();
+
+
+const month =
+    String(
+        today.getMonth() + 1
+    ).padStart(
+        2,
+        "0"
+    );
+
+
+const day =
+    String(
+        today.getDate()
+    ).padStart(
+        2,
+        "0"
+    );
+
+
+const todayString =
+    year +
+    "-" +
+    month +
+    "-" +
+    day;
+
+
+borrowDate.value =
+    todayString;
+
+
+borrowDate.min =
+    todayString;
+
+
+
+/* =====================================================
+   HITUNG TANGGAL KEMBALI
+===================================================== */
+
+const duration =
+    document.getElementById(
+        "duration"
+    );
+
+
+const returnDate =
+    document.getElementById(
+        "returnDate"
+    );
+
+
+function calculateReturnDate() {
+
+
+    if (
+        !borrowDate.value ||
+        !duration.value
+    ) {
+
+        returnDate.value =
+            "";
+
+        return;
+
+    }
+
+
+    const start =
+        new Date(
+            borrowDate.value +
+            "T00:00:00"
+        );
+
+
+    start.setDate(
+        start.getDate() +
+        Number(
+            duration.value
+        )
+    );
+
+
+    const returnYear =
+        start.getFullYear();
+
+
+    const returnMonth =
+        String(
+            start.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const returnDay =
+        String(
+            start.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    returnDate.value =
+        returnYear +
+        "-" +
+        returnMonth +
+        "-" +
+        returnDay;
+
+
+    updateSummary();
+
+}
+
+
+borrowDate.addEventListener(
+    "change",
+    function() {
+
+        calculateReturnDate();
+
+    }
+);
+
+
+duration.addEventListener(
+    "change",
+    function() {
+
+        calculateReturnDate();
+
+    }
+);
+
+
+
+/* =====================================================
+   FORMAT TANGGAL
+===================================================== */
+
+function formatDate(
+    dateString
+) {
+
+    if (!dateString) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            dateString +
+            "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "id-ID",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary() {
+
+
+    document.getElementById(
+        "summaryMember"
+    ).textContent =
+        document.getElementById(
+            "memberName"
+        ).value ||
+        "-";
+
+
+    document.getElementById(
+        "summaryBorrow"
+    ).textContent =
+        formatDate(
+            borrowDate.value
+        );
+
+
+    document.getElementById(
+        "summaryReturn"
+    ).textContent =
+        formatDate(
+            returnDate.value
+        );
+
+}
+
+
+document.getElementById(
+    "memberName"
+).addEventListener(
+    "input",
+    updateSummary
+);
+
+
+
+/* =====================================================
+   DATABASE LOCAL STORAGE
+===================================================== */
+
+/*
+   Semua permintaan peminjaman disimpan
+   dengan nama:
+
+   libraryLoanRequests
+
+   Dashboard petugas nantinya dapat membaca
+   data dengan key yang sama.
+*/
+
+const LOAN_STORAGE_KEY =
+    "libraryLoanRequests";
+
+
+
+function getLoanRequests() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            LOAN_STORAGE_KEY
+        )
+    ) || [];
+
+}
+
+
+
+/* =====================================================
+   BUAT NOMOR PERMINTAAN
+===================================================== */
+
+function generateRequestNumber() {
+
+
+    const now =
+        new Date();
+
+
+    const timestamp =
+        now.getTime()
+            .toString()
+            .slice(-6);
+
+
+    return "PMJ-" +
+        timestamp;
+
+}
+
+
+
+/* =====================================================
+   CEK PERMINTAAN DUPLIKAT
+===================================================== */
+
+function hasPendingRequest(
+    memberId,
+    bookId
+) {
+
+
+    const requests =
+        getLoanRequests();
+
+
+    return requests.some(
+        function(request) {
+
+            return (
+                request.memberId === memberId &&
+                request.bookId === bookId &&
+                (
+                    request.status ===
+                        "Menunggu Persetujuan" ||
+
+                    request.status ===
+                        "Disetujui"
+                )
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SUBMIT PEMINJAMAN
+===================================================== */
+
+function submitLoan() {
+
+
+    /* ---------------------------------------------
+       VALIDASI BUKU
+    --------------------------------------------- */
+
+    if (!book) {
+
+        alert(
+            "Buku tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------
+       CEK BUKU DIGITAL
+    --------------------------------------------- */
+
+    if (
+        book.type === "Wattpad" ||
+        book.type === "GWP"
+    ) {
+
+        alert(
+            "Buku digital tidak memerlukan peminjaman."
+        );
+
+        return;
+
+    }
+
+
+
+    /* ---------------------------------------------
+       AMBIL DATA FORM
+    --------------------------------------------- */
+
+    const memberName =
+        document.getElementById(
+            "memberName"
+        ).value.trim();
+
+
+    const memberId =
+        document.getElementById(
+            "memberId"
+        ).value.trim();
+
+
+    const borrowDateValue =
+        document.getElementById(
+            "borrowDate"
+        ).value;
+
+
+    const durationValue =
+        document.getElementById(
+            "duration"
+        ).value;
+
+
+    const returnDateValue =
+        document.getElementById(
+            "returnDate"
+        ).value;
+
+
+    const notes =
+        document.getElementById(
+            "notes"
+        ).value.trim();
+
+
+
+    /* ---------------------------------------------
+       VALIDASI
+    --------------------------------------------- */
+
+    if (!memberName) {
+
+        alert(
+            "Silakan masukkan nama anggota."
+        );
+
+        return;
+
+    }
+
+
+    if (!memberId) {
+
+        alert(
+            "Silakan masukkan ID atau nomor anggota."
+        );
+
+        return;
+
+    }
+
+
+    if (!borrowDateValue) {
+
+        alert(
+            "Silakan pilih tanggal peminjaman."
+        );
+
+        return;
+
+    }
+
+
+    if (!durationValue) {
+
+        alert(
+            "Silakan pilih lama peminjaman."
+        );
+
+        return;
+
+    }
+
+
+    if (!returnDateValue) {
+
+        alert(
+            "Tanggal pengembalian belum dihitung."
+        );
+
+        return;
+
+    }
+
+
+
+    /* ---------------------------------------------
+       CEK DUPLIKAT
+    --------------------------------------------- */
+
+    if (
+        hasPendingRequest(
+            memberId,
+            bookId
+        )
+    ) {
+
+        alert(
+            "Anda sudah memiliki permintaan peminjaman untuk buku ini yang masih aktif."
+        );
+
+        return;
+
+    }
+
+
+
+    /* ---------------------------------------------
+       BUAT DATA PERMINTAAN
+    --------------------------------------------- */
+
+    const requestNumber =
+        generateRequestNumber();
+
+
+    const newRequest = {
+
+        id:
+            Date.now(),
+
+        requestNumber:
+            requestNumber,
+
+        bookId:
+            bookId,
+
+        bookTitle:
+            book.title,
+
+        bookAuthor:
+            book.author,
+
+        bookCover:
+            book.cover,
+
+        memberName:
+            memberName,
+
+        memberId:
+            memberId,
+
+        borrowDate:
+            borrowDateValue,
+
+        returnDate:
+            returnDateValue,
+
+        duration:
+            Number(
+                durationValue
+            ),
+
+        notes:
+            notes,
+
+        status:
+            "Menunggu Persetujuan",
+
+        createdAt:
+            new Date().toISOString(),
+
+        approvedAt:
+            null,
+
+        rejectedAt:
+            null,
+
+        processedBy:
+            null
+
+    };
+
+
+
+    /* ---------------------------------------------
+       SIMPAN
+    --------------------------------------------- */
+
+    const requests =
+        getLoanRequests();
+
+
+    requests.push(
+        newRequest
+    );
+
+
+    localStorage.setItem(
+        LOAN_STORAGE_KEY,
+        JSON.stringify(
+            requests
+        )
+    );
+
+
+
+    /* ---------------------------------------------
+       SIMPAN DATA ANGGOTA
+       UNTUK PEMAKAIAN BERIKUTNYA
+    --------------------------------------------- */
+
+    localStorage.setItem(
+        "username",
+        memberName
+    );
+
+
+    localStorage.setItem(
+        "memberId",
+        memberId
+    );
+
+
+
+    /* ---------------------------------------------
+       TAMPILKAN STATUS
+    --------------------------------------------- */
+
+    document.getElementById(
+        "requestNumber"
+    ).textContent =
+        requestNumber;
+
+
+    document.getElementById(
+        "statusBox"
+    ).classList.add(
+        "show"
+    );
+
+
+    document.getElementById(
+        "submitButton"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "submitButton"
+    ).textContent =
+        "✓ Permintaan Terkirim";
+
+
+    document.getElementById(
+        "statusBox"
+    ).scrollIntoView({
+        behavior:
+            "smooth",
+        block:
+            "center"
+    });
+
+
+    alert(
+        "Permintaan peminjaman berhasil dikirim kepada petugas."
+    );
+
+}
+
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+const savedTheme =
+    localStorage.getItem(
+        "libraryTheme"
+    );
+
+
+if (
+    savedTheme === "dark"
+) {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+    themeButton.textContent =
+        "☀️";
+
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        const dark =
+            document.body.classList.contains(
+                "dark"
+            );
+
+
+        localStorage.setItem(
+            "libraryTheme",
+            dark
+                ? "dark"
+                : "light"
+        );
+
+
+        themeButton.textContent =
+            dark
+                ? "☀️"
+                : "🌙";
+
+    }
+);
+
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+calculateReturnDate();
+
+updateSummary();
+
+</script>
+
+
+</body>
+
+</html>
